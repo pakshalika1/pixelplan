@@ -1,0 +1,327 @@
+:root {
+    --blue: #4F7BFF;
+    --yellow: #FFD95A;
+    --pink: #FFBFB1;
+    --dark-purple: #5B3CC4;
+    --light-blue: #E8F0FF;
+    --bg-color: #F9FAFF;
+    --ui-card: #DCE6FF;
+    --accent: #C8B6FF;
+    --text-dark: #1A1F3A;
+    --border-thick: 3px solid var(--text-dark);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-color);
+    background-image:
+        radial-gradient(var(--accent) 1px, transparent 1px),
+        radial-gradient(var(--accent) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    background-attachment: fixed;
+    color: var(--text-dark);
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+*:focus-visible {
+    outline: 4px dashed var(--pink);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+h1, h2, .btn-primary, .btn-complete, .btn-buy, .score-badge, .stat-label {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.arcade-card {
+    background-color: var(--ui-card);
+    border: var(--border-thick);
+    box-shadow: 6px 6px 0px var(--text-dark);
+    padding: 1.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    animation: pop-in 0.35s ease both;
+}
+
+.arcade-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px var(--text-dark);
+}
+
+@keyframes pop-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.section-title {
+    font-size: 1rem;
+    color: var(--dark-purple);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.player-header {
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--ui-card) 60%, var(--accent) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.char-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.char-title {
+    font-size: 1.2rem;
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.char-sub { font-weight: 700; font-size: 1rem; }
+
+.badges-container { display: flex; gap: 0.5rem; }
+
+.score-badge {
+    background: var(--yellow);
+    padding: 0.5rem 0.8rem;
+    border: var(--border-thick);
+    font-size: 0.75rem;
+    box-shadow: 3px 3px 0px var(--text-dark);
+    transition: transform 0.2s ease;
+}
+
+.score-badge.bump { animation: badge-bump 0.35s ease; }
+@keyframes badge-bump {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25) rotate(-4deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.level-bar-wrapper { margin-bottom: 1.5rem; }
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.progress-bar {
+    background-color: var(--bg-color);
+    border: var(--border-thick);
+    height: 24px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--pink),
+        var(--pink) 10px,
+        #ffd2c7 10px,
+        #ffd2c7 20px
+    );
+    height: 100%;
+    border-right: var(--border-thick);
+    transition: width 0.4s steps(10);
+}
+
+.attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.stat-box {
+    background: var(--accent);
+    border: var(--border-thick);
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 3px 3px 0px var(--text-dark);
+    transition: transform 0.15s ease;
+}
+
+.stat-box:hover { transform: translateY(-3px); }
+
+.stat-label { font-size: 0.6rem; margin-bottom: 0.5rem; }
+.stat-value { font-size: 1.5rem; font-weight: 700; }
+
+.stat-value.bump { animation: stat-pop 0.4s ease; }
+@keyframes stat-pop {
+    0% { transform: scale(1); color: var(--text-dark); }
+    50% { transform: scale(1.4); color: var(--blue); }
+    100% { transform: scale(1); color: var(--text-dark); }
+}
+
+#quest-form { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+#quest-title, #quest-attribute {
+    padding: 0.8rem;
+    border: var(--border-thick);
+    background: var(--bg-color);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+#quest-title { flex: 1 1 200px; }
+
+#quest-title:focus, #quest-attribute:focus { outline: none; background: #fff; border-color: var(--blue); }
+
+.btn-primary {
+    background-color: var(--blue);
+    color: white;
+    border: var(--border-thick);
+    padding: 0.8rem 1.2rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--text-dark);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn-primary:hover, .btn-complete:hover, .btn-buy:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--text-dark);
+}
+
+.btn-primary:active, .btn-complete:active, .btn-buy:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--text-dark);
+}
+
+.task-list { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.task-card {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task-name { font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 0.5rem; }
+.task-meta { display: flex; gap: 0.5rem; flex-wrap: wrap;}
+
+.tag, .reward-tag {
+    padding: 0.3rem 0.6rem;
+    border: 2px solid var(--text-dark);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.tag-intellect { background: var(--light-blue); }
+.tag-strength { background: var(--pink); }
+.tag-creativity { background: var(--yellow); }
+.reward-tag { background: var(--bg-color); }
+
+.btn-complete {
+    background: var(--yellow);
+    color: var(--text-dark);
+    border: var(--border-thick);
+    padding: 0.8rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--text-dark);
+}
+
+.btn-complete:hover { background: var(--pink); }
+
+.task-completed {
+    transform: scale(0.9) rotate(2deg);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.empty-msg {
+    background: #fff;
+    border: var(--border-thick);
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.shop-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    border: var(--border-thick);
+    background: #fff;
+    font-weight: 700;
+    transition: transform 0.15s ease;
+}
+.shop-item:hover { transform: translateX(2px); }
+
+.btn-buy {
+    background: var(--blue);
+    color: #fff;
+    border: var(--border-thick);
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.6rem;
+    box-shadow: 3px 3px 0px var(--text-dark);
+}
+
+/* Level-up celebration overlay */
+.levelup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 31, 58, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.levelup-card {
+    background: var(--yellow);
+    border: var(--border-thick);
+    box-shadow: 8px 8px 0px var(--text-dark);
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    animation: level-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 90%;
+}
+
+@keyframes level-pop {
+    0% { transform: scale(0.4) rotate(-8deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.levelup-card p { margin-top: 0.8rem; font-size: 0.7rem; }
+
+@media (max-width: 600px) {
+    .attributes-grid { grid-template-columns: 1fr; }
+    #quest-form { flex-direction: column; }
+    #quest-title, #quest-attribute, .btn-primary { width: 100%; }
+    .task-card { flex-direction: column; align-items: flex-start; }
+    .btn-complete { width: 100%; margin-top: 0.5rem; }
+}

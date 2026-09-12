@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPlan &mdash; Life RPG</title>
+    <meta name="description" content="PixelPlan: turn your daily habits into an 8-bit arcade RPG. Earn XP, level up, and buy rewards.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Player Stats -->
+        <header class="arcade-card player-header">
+            <div class="char-header">
+                <div>
+                    <h1 class="char-title">PLAYER 1: <%= user.username %></h1>
+                    <p class="char-sub">LEVEL <%= user.level %> HACKER</p>
+                </div>
+                <div class="badges-container">
+                    <div class="score-badge" aria-label="Current Tokens">🟡 <span id="token-val"><%= user.tokens %></span></div>
+                    <div class="score-badge" style="background: var(--pink);" aria-label="Day Streak">🔥 <%= user.streak_days %></div>
+                </div>
+            </div>
+
+            <div class="level-bar-wrapper">
+                <div class="bar-labels">
+                    <span>XP</span>
+                    <span><span id="xp-val"><%= user.xp %></span>/<span id="xp-target"><%= nextLevelXp %></span></span>
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="<%= progressPercent %>" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-fill" id="progress-fill" style="width: <%= progressPercent %>%;"></div>
+                </div>
+            </div>
+
+            <div class="attributes-grid">
+                <div class="stat-box" aria-label="Intellect: <%= user.intellect %>">
+                    <span class="stat-label">INT</span>
+                    <span class="stat-value"><%= user.intellect %></span>
+                </div>
+                <div class="stat-box" aria-label="Strength: <%= user.strength %>">
+                    <span class="stat-label">STR</span>
+                    <span class="stat-value"><%= user.strength %></span>
+                </div>
+                <div class="stat-box" aria-label="Creativity: <%= user.creativity %>">
+                    <span class="stat-label">CRT</span>
+                    <span class="stat-value"><%= user.creativity %></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Command Input -->
+        <section class="arcade-card add-quest-section" aria-labelledby="insert-quest">
+            <h2 id="insert-quest" class="section-title">&gt; INSERT QUEST</h2>
+            <form id="quest-form" action="/api/tasks" method="POST">
+                <input type="text" id="quest-title" name="title" placeholder="ENTER MISSION..." required autocomplete="off" aria-label="Quest title">
+                <select id="quest-attribute" name="attribute" aria-label="Quest attribute">
+                    <option value="Intellect">INTELLECT</option>
+                    <option value="Strength">STRENGTH</option>
+                    <option value="Creativity">CREATIVITY</option>
+                </select>
+                <button type="submit" class="btn-primary">START</button>
+            </form>
+        </section>
+
+        <!-- Active Missions -->
+        <main class="quest-board" aria-labelledby="active-stage">
+            <h2 id="active-stage" class="section-title">ACTIVE STAGE</h2>
+            <div class="task-list" id="task-list">
+                <% if (tasks.length === 0) { %>
+                    <p class="empty-msg" style="font-weight: 700;">NO ACTIVE QUESTS. PRESS START.</p>
+                <% } %>
+                <% tasks.forEach(task => { %>
+                    <div class="arcade-card task-card" data-id="<%= task.id %>">
+                        <div class="task-details">
+                            <span class="task-name"><%= task.title %></span>
+                            <div class="task-meta">
+                                <span class="tag tag-<%= task.attribute.toLowerCase() %>"><%= task.attribute %></span>
+                                <span class="reward-tag">XP +<%= task.xp_reward %></span>
+                                <span class="reward-tag">TOKENS +<%= task.tokens_reward %></span>
+                            </div>
+                        </div>
+                        <button class="btn-complete" onclick="completeTask(<%= task.id %>)" aria-label="Complete quest: <%= task.title %>">DONE</button>
+                    </div>
+                <% }) %>
+            </div>
+        </main>
+
+        <!-- Economy Shop -->
+        <section class="arcade-card shop-section" aria-labelledby="shop-title">
+            <h2 id="shop-title" class="section-title">ITEM SHOP</h2>
+            <div class="shop-grid">
+                <% shopItems.forEach(item => { %>
+                    <div class="shop-item">
+                        <span><%= item.name %></span>
+                        <% if (item.is_owned) { %>
+                            <span class="tag" style="background: var(--light-blue);">OWNED</span>
+                        <% } else { %>
+                            <button class="btn-buy" onclick="buyItem(<%= item.id %>, <%= item.cost %>)" aria-label="Buy <%= item.name %> for <%= item.cost %> tokens">
+                                <%= item.cost %>T
+                            </button>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
