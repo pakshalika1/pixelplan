@@ -1,6 +1,5 @@
 # PixelPlan 🎮
-
-Built for **HackNITR 8.0** at NIT Rourkela, PixelPlan transforms daily habits into an engaging 8-bit arcade experience. It solves the "delayed gratification" problem of traditional productivity tools by bridging mundane real-world tasks with instant dopamine feedback loops. Users earn Tokens and XP to level up non-linear character attributes (Intellect, Strength, Creativity) and spend Tokens in the Item Shop.
+ PixelPlan transforms daily habits into an engaging 8-bit arcade experience. It solves the "delayed gratification" problem of traditional productivity tools by bridging mundane real-world tasks with instant dopamine feedback loops. Users earn Tokens and XP to level up non-linear character attributes (Intellect, Strength, Creativity) and spend Tokens in the Item Shop.
 
 **Developer:** Pakshalika Routray
 
